@@ -1,19 +1,11 @@
 const { Pool } = require("pg");
 
-const platforms = new Pool({
+const pool = new Pool({
 	host: process.env.HOST,
 	user: process.env.USER,
-	database: process.env.PLATFORMDB,
+	database: process.env.DB,
 	password: process.env.DBPASSWORD,
 	port: process.env.DBPORT,
 });
 
-const games = new Pool({
-	host: process.env.HOST,
-	user: process.env.USER,
-	database: process.env.GAMEDB,
-	password: process.env.DBPASSWORD,
-	port: process.env.DBPORT,
-});
-
-module.exports = { platforms, games };
+module.exports = pool;

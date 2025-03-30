@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Game Catalogue</title>
+        <link rel="stylesheet" href="view.css">
+	</head>
+	<body>
+		<h1>Game Collection</h1>
+
+		<h2>Games</h2>
+		<table border="1">
+			<thead>
+				<tr>
+					<th>Name</th>
+					<th>Platform</th>
+					<th>Status</th>
+					<th>Notes</th>
+					<th>Date Added</th>
+				</tr>
+			</thead>
+			<tbody>
+				<% games.forEach(game => { %>
+				<tr>
+					<td><%= game.game %></td>
+					<td><%= game.platform %></td>
+					<td><%= game.completion_status %></td>
+					<td><%= game.notes %></td>
+					<td><%= new Date(game.date_added).toLocaleDateString() %></td>
+				</tr>
+				<% }); %>
+			</tbody>
+		</table>
+
+		<div class="platforms">
+            <h2>Platforms</h2>
+            <ul class="platformsCont">
+                <% platforms.forEach(element => { %> 
+                    <li><%= element.name %></li>
+                <% }); %>
+            </ul>
+        </div>
+
+		<div class="actions">
+			<a href="/newGame">Add New Game</a> |
+			<a href="/newPlatform">Add New Platform</a>
+		</div>
+	</body>
+</html>
