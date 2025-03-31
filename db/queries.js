@@ -29,12 +29,15 @@ async function getPlatforms() {
 async function addGame(name, platform, completion_status, notes) {
 	await pool.query(
 		"INSERT INTO games (name, platform_id, completion_status, notes) " +
-			"VALUES ($1, (SELECT id FROM platforms WHERE platforms.name LIKE $2), $3, $4)",
-		[name, platform, completion_status, notes]
+			"VALUES ($1, (SELECT id FROM platforms WHERE platforms.name = $2), $3, $4)" + 
+            " ON CONFLICT (name) DO NOTHING",
+		[name, platform, completion_status, (notes == "" ? "No Notes" : notes)]
 	);
 }
 
-async function addPlatform() {}
+async function addPlatform(name) {
+    await pool.query("INSERT INTO platforms (name) VALUES ($1) ON CONFLICT (name) DO NOTHING", [name]);
+}
 
 async function deleteGame() {}
 

@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html>
     <head>
         <title>Add A game</title>
@@ -11,7 +12,7 @@
             <label for="platform">Platform: </label>
             <select name="platform" id="platform">
                 <% platforms.forEach(element => {%>
-                    <option value=<%=element.name%>><%= element.name %></option>
+                    <option value="<%=element.name%>"><%= element.name %></option>
                 <%})%>
             </select>
             <label for="completion_status">Completion Status: </label>
@@ -25,6 +26,7 @@
             <input type="text" name="notes" id="notes">
             <button type="submit">Submit</button>
         </form>
+        <br>
         <a href="/">Back to home page</a>
     </body>
 </html>
