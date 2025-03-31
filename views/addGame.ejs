@@ -1,0 +1,30 @@
+<html>
+    <head>
+        <title>Add A game</title>
+    </head>
+    <body>
+        <h1>Game Creation</h1>
+        <%- include("errors.ejs") %>
+        <form action="/addGame" method="post">
+            <label for="name">Name: </label>
+            <input type="text" name="name" id="name" required>
+            <label for="platform">Platform: </label>
+            <select name="platform" id="platform">
+                <% platforms.forEach(element => {%>
+                    <option value=<%=element.name%>><%= element.name %></option>
+                <%})%>
+            </select>
+            <label for="completion_status">Completion Status: </label>
+            <select name="completion_status" id="completion_status">
+                <option value="Unplayed">Unplayed</option>
+                <option value="Beaten">Beaten</option>
+                <option value="100%">100%</option>
+                <option value="Invalid">Invalid</option>
+            </select>
+            <label for="notes">Notes: </label>
+            <input type="text" name="notes" id="notes">
+            <button type="submit">Submit</button>
+        </form>
+        <a href="/">Back to home page</a>
+    </body>
+</html>
