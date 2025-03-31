@@ -6,12 +6,12 @@ exports.getIndex = async function (req, res) {
 };
 
 exports.getView = async function (req, res) {
-	const filter = req.query.platform || "";
-	const values = await db.getAll(filter);
+	const search = req.query.search || "";
+	const values = await db.getAll(search);
 	res.render("view", {
 		games: values[0],
 		platforms: values[1],
-		filter: filter,
+		search: search,
 	});
 };
 

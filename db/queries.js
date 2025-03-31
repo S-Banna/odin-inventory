@@ -1,19 +1,20 @@
 const pool = require("./pool.js");
 
-async function getAll(platform = "") {
-	const gameValues = await getGames(platform);
+async function getAll(search = "") {
+	const gameValues = await getGames(search);
 	const platformValues = await getPlatforms();
 	return [gameValues, platformValues];
 }
 
-async function getGames(platform) {
+async function getGames(search = "") {
 	let query =
 		"SELECT games.name AS game, platforms.name AS platform, completion_status, notes, date_added FROM games" +
-		(platform ? " WHERE platform ILIKE $1" : "") +
-		" JOIN platforms ON platforms.id = games.platform_id ORDER BY platform";
+        " JOIN platforms ON platforms.id = games.platform_id" +
+		(search ? " WHERE games.name ILIKE $1" : "") +
+		" ORDER BY platform";
 	let values = [];
 
-	if (platform) values.push(`%${platform}%`);
+	if (search) values.push(`%${search}%`);
 
 	const { rows } = await pool.query(query, values);
 	return rows;

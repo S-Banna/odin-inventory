@@ -2,12 +2,24 @@
 <html>
 	<head>
 		<title>Game Catalogue</title>
-        <link rel="stylesheet" href="view.css">
+		<link rel="stylesheet" href="view.css" />
 	</head>
 	<body>
 		<h1>Game Collection</h1>
-
+		<h3>Search for a game:</h3>
+		<form action="/view" method="get">
+			<input
+				type="text"
+				name="search"
+				value="<%= search %>"
+				placeholder="Search Games"
+			/>
+			<button type="submit">Search</button>
+		</form>
 		<h2>Games</h2>
+		<% if (games.length == 0) { %>
+		<h4>No Game Found.</h4>
+		<% } else { %>
 		<table border="1">
 			<thead>
 				<tr>
@@ -30,15 +42,16 @@
 				<% }); %>
 			</tbody>
 		</table>
+		<%}%>
 
 		<div class="platforms">
-            <h2>Platforms</h2>
-            <ul class="platformsCont">
-                <% platforms.forEach(element => { %> 
-                    <li><%= element.name %></li>
-                <% }); %>
-            </ul>
-        </div>
+			<h2>Platforms</h2>
+			<ul class="platformsCont">
+				<% platforms.forEach(element => { %>
+				<li><%= element.name %></li>
+				<% }); %>
+			</ul>
+		</div>
 
 		<div class="actions">
 			<a href="/addGame">Add New Game</a> |
