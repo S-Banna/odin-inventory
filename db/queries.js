@@ -43,7 +43,9 @@ async function deleteGame(name) {
 	await pool.query("DELETE FROM games WHERE name=$1", [name]);
 }
 
-async function deletePlatform() {}
+async function deletePlatform(name) {
+	await pool.query("DELETE FROM platforms WHERE name=$1", [name]);
+}
 
 async function updateGame() {}
 

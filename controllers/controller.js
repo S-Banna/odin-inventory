@@ -85,3 +85,28 @@ exports.postDeleteGame = async function (req, res) {
 	await db.deleteGame(name);
 	res.redirect("view");
 }
+
+const validatePlatformDelete = [
+	body("password")
+		.equals(process.env.PLATFORMDBPASSWORD)
+		.withMessage("Password is incorrect."),
+];
+
+exports.getDeletePlatform = async function (req, res) {
+	const platformList = await db.getPlatforms();
+	res.render("deletePlatform", { platforms: platformList });
+}
+
+exports.postDeletePlatform = [
+	validatePlatformDelete,
+	async function (req, res) {
+		const errors = validationResult(req);
+		const platformList = await db.getPlatforms();
+		if (!errors.isEmpty()) {
+			return res.status(400).render("deletePlatform", { platforms: platformList, errors: errors.array() });
+		}
+		const { name } = req.body;
+		await db.deletePlatform(name);
+		res.redirect("view");
+	}
+]

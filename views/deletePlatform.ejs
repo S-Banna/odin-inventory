@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Delete Platform</title>
+	</head>
+	<body>
+		<h1>Platform Deletion</h1>
+		<h3>
+			<strong>WARNING: Deleting a platform will delete all linked games</strong>
+		</h3>
+		<h3>Note: a password is required to alter platforms.</h3>
+		<%- include("errors.ejs") %>
+		<form action="/deletePlatform" method="post">
+			<label for="name">Name: </label>
+			<select name="name" id="name">
+				<% platforms.forEach(platform => {%>
+				<option value="<%=platform.name%>"><%=platform.name%></option>
+				<%})%>
+			</select>
+			<label for="password">Password: </label>
+			<input type="text" name="password" id="password" required />
+			<button type="submit">Submit</button>
+		</form>
+		<br />
+		<a href="/view">Back to home page</a>
+	</body>
+</html>
