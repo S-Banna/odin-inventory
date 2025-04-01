@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Delete Game</title>
+	</head>
+	<body>
+        <h1>Select Game to Delete</h1>
+        <form action="/deleteGame" method="post">
+            <label for="name">Game: </label>
+            <select name="name" id="name">
+                <% games.forEach(element => { %>
+                <option value="<%=element.game%>"><%=element.game%></option>
+                <% }) %>
+            </select>
+            <button type="submit">Delete</button>
+        </form>
+        <br>
+        <a href="/view">Back to home page</a>
+    </body>
+</html>

@@ -74,3 +74,14 @@ exports.postAddPlatform = [
 		res.redirect("view");
 	},
 ];
+
+exports.getDeleteGame = async function (req, res) {
+	const games = await db.getGames();
+	res.render("deleteGame", { games: games });
+}
+
+exports.postDeleteGame = async function (req, res) {
+	const { name } = req.body;
+	await db.deleteGame(name);
+	res.redirect("view");
+}

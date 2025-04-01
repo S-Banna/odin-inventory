@@ -39,7 +39,9 @@ async function addPlatform(name) {
     await pool.query("INSERT INTO platforms (name) VALUES ($1) ON CONFLICT (name) DO NOTHING", [name]);
 }
 
-async function deleteGame() {}
+async function deleteGame(name) {
+	await pool.query("DELETE FROM games WHERE name=$1", [name]);
+}
 
 async function deletePlatform() {}
 
