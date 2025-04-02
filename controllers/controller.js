@@ -110,3 +110,45 @@ exports.postDeletePlatform = [
 		res.redirect("view");
 	}
 ]
+
+exports.getUpdateGame = async function (req, res) {
+	const platformList = await db.getPlatforms();
+	const gamesList = await db.getGames();
+	res.render("updateGame", { games: gamesList, platforms: platformList });
+}
+
+exports.postUpdateGame = [
+	validateGame,
+	async function (req, res) {
+		const errors = validationResult(req);
+		const platformList = await db.getPlatforms();
+		const gamesList = await db.getGames();
+		if (!errors.isEmpty()) {
+			return res
+				.status(400)
+				.render("updateGame", { games: gamesList, platforms: platformList, errors: errors.array() });
+		}
+		const { toBeUpdated, name, platform, completion_status, notes } = req.body;
+		await db.updateGame(toBeUpdated, name, platform, completion_status, notes);
+		res.redirect("view");
+	},
+];
+
+exports.getUpdatePlatform = async function (req, res) {
+	const platformList = await db.getPlatforms();
+	res.render("updatePlatform", { platforms: platformList });
+};
+
+exports.postUpdatePlatform = [
+	validatePlatform,
+	async function (req, res) {
+		const errors = validationResult(req);
+		const platformList = await db.getPlatforms();
+		if (!errors.isEmpty()) {
+			return res.status(400).render("updatePlatform", { errors: errors.array(), platforms: platformList });
+		}
+		const { toBeUpdated, name } = req.body;
+		await db.updatePlatform(toBeUpdated, name);
+		res.redirect("view");
+	},
+];

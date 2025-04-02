@@ -1,13 +1,21 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Add a Platform</title>
+        <title>Update a Platform</title>
     </head>
     <body>
-        <h1>Platform Creation</h1>
+        <h1>Platform Update</h1>
         <h3>Note: a password is required to alter platforms.</h3>
         <%- include("errors.ejs") %>
-        <form action="/addPlatform" method="post">
+        <form action="/updatePlatform" method="post">
+            <label for="toBeUpdated">Choose Platform to Update: </label>
+            <select name="toBeUpdated" id="toBeUpdated">
+                <% platforms.forEach(element => {%>
+                    <option value="<%=element.name%>"><%=element.name%></option>
+                <%})%>
+            </select>
+            <br>
+            <h4>New Name:</h4>
             <label for="name">Name: </label>
             <input type="text" name="name" id="name" required>
             <label for="password">Password: </label>

@@ -12,5 +12,9 @@ router.get("/deleteGame", controller.getDeleteGame);
 router.post("/deleteGame", controller.postDeleteGame);
 router.get("/deletePlatform", controller.getDeletePlatform);
 router.post("/deletePlatform", controller.postDeletePlatform);
+router.get("/updateGame", controller.getUpdateGame);
+router.post("/updateGame", controller.postUpdateGame);
+router.get("/updatePlatform", controller.getUpdatePlatform);
+router.post("/updatePlatform", controller.postUpdatePlatform);
 
 module.exports = router;

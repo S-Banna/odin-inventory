@@ -9,7 +9,7 @@ async function getAll(search = "") {
 async function getGames(search = "") {
 	let query =
 		"SELECT games.name AS game, platforms.name AS platform, completion_status, notes, date_added FROM games" +
-        " JOIN platforms ON platforms.id = games.platform_id" +
+		" JOIN platforms ON platforms.id = games.platform_id" +
 		(search ? " WHERE games.name ILIKE $1" : "") +
 		" ORDER BY platform";
 	let values = [];
@@ -29,14 +29,17 @@ async function getPlatforms() {
 async function addGame(name, platform, completion_status, notes) {
 	await pool.query(
 		"INSERT INTO games (name, platform_id, completion_status, notes) " +
-			"VALUES ($1, (SELECT id FROM platforms WHERE platforms.name = $2), $3, $4)" + 
-            " ON CONFLICT (name) DO NOTHING",
-		[name, platform, completion_status, (notes == "" ? "No Notes" : notes)]
+			"VALUES ($1, (SELECT id FROM platforms WHERE platforms.name = $2), $3, $4)" +
+			" ON CONFLICT (name) DO NOTHING",
+		[name, platform, completion_status, notes == "" ? "No Notes" : notes]
 	);
 }
 
 async function addPlatform(name) {
-    await pool.query("INSERT INTO platforms (name) VALUES ($1) ON CONFLICT (name) DO NOTHING", [name]);
+	await pool.query(
+		"INSERT INTO platforms (name) VALUES ($1) ON CONFLICT (name) DO NOTHING",
+		[name]
+	);
 }
 
 async function deleteGame(name) {
@@ -47,14 +50,22 @@ async function deletePlatform(name) {
 	await pool.query("DELETE FROM platforms WHERE name=$1", [name]);
 }
 
-async function updateGame() {}
+async function updateGame(prev, name, platform, completion_status, notes) {
+	await pool.query(
+		"UPDATE games SET name = COALESCE($2, name), platform_id = COALESCE((SELECT id FROM platforms WHERE name = $3), platform_id), " +
+			"completion_status = COALESCE($4, completion_status), notes = COALESCE($5, notes) WHERE name = $1",
+		[prev, name, platform, completion_status, notes == "" ? "No Notes" : notes]
+	);
+}
 
-async function updatePlatform() {}
+async function updatePlatform(prev, name) {
+	await pool.query("UPDATE platforms SET name = COALESCE($2, name) WHERE name = $1", [prev, name]);
+}
 
 module.exports = {
 	getAll,
-    getGames,
-    getPlatforms,
+	getGames,
+	getPlatforms,
 	addGame,
 	addPlatform,
 	deleteGame,

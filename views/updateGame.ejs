@@ -1,14 +1,22 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Add a Game</title>
+        <title>Update a Game</title>
     </head>
     <body>
-        <h1>Game Creation</h1>
+        <h1>Game Update</h1>
         <%- include("errors.ejs") %>
-        <form action="/addGame" method="post">
+        <form action="/updateGame" method="post">
+            <label for="toBeUpdated">Choose Game to Update: </label>
+            <select name="toBeUpdated" id="toBeUpdated">
+                <% games.forEach(element => {%>
+                    <option value="<%=element.game%>"><%=element.game%></option>
+                <%})%>
+            </select>
+            <br>
+            <h4>New Values:</h4>
             <label for="name">Name: </label>
-            <input type="text" name="name" id="name" required>
+            <input type="text" name="name" id="name">
             <label for="platform">Platform: </label>
             <select name="platform" id="platform">
                 <% platforms.forEach(element => {%>
